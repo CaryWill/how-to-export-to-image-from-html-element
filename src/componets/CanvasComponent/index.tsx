@@ -75,7 +75,7 @@ export const CanvasComponent = (props: {}) => {
       <iframe src={demo} width={200} height={200} ref={ref} />
       <div>
         <Button type="primary" onClick={download}>
-          download iframe svg file
+          download iframe svg file to png image
         </Button>
       </div>
     </div>
