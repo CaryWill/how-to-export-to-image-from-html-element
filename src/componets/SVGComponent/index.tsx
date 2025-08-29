@@ -1,5 +1,5 @@
 import { Typography } from "antd";
-import demo from "@/assets/demo.html";
+const demo = new URL("@/assets/demo.html", import.meta.url).href;
 
 export const SVGComponent = (props: {}) => {
   const docs = [
