@@ -26,14 +26,12 @@ export const SVGComponent = (props: {}) => {
   ];
   // TODO: 1. xml and html, what is the difference? html can also have xmlns?
 
-  // code from html-to-image
   async function svgToDataURL(svg: SVGElement): Promise<string> {
     return Promise.resolve()
       .then(() => new XMLSerializer().serializeToString(svg))
       .then(encodeURIComponent)
       .then((html) => `data:image/svg+xml;charset=utf-8,${html}`);
   }
-
   const download = async () => {
     if (!ref.current) return;
     const svgNode =
@@ -41,7 +39,7 @@ export const SVGComponent = (props: {}) => {
     const dataUrl = await svgToDataURL(svgNode);
 
     var link = document.createElement("a");
-    link.download = "my-image-name.svg";
+    link.download = "my-image-name.jpeg";
     link.href = dataUrl;
     link.click();
   };
@@ -58,21 +56,8 @@ export const SVGComponent = (props: {}) => {
           )}
         </div>
       ))}
-      <div>
-        Below svg content is from{" "}
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/foreignObject"
-          target="_blank"
-        >
-          here(foreignObject)
-        </a>
-      </div>
       <iframe src={demo} width={200} height={200} ref={ref} />
-      <div>
-        <Button type="primary" onClick={download}>
-          download iframe svg file
-        </Button>
-      </div>
+      <Button onClick={download}>download iframe svg file</Button>
     </div>
   );
 };
