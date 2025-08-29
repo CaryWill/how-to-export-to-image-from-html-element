@@ -3,6 +3,7 @@ import { Tabs } from "antd";
 import { DataUrls } from "./componets/DataUrls";
 import "./App.css";
 import { SVGComponent } from "./componets/SVGComponent";
+import { CanvasComponent } from "./componets/CanvasComponent";
 
 function App() {
   // since chrome does not offer api to create image out of html elements directly
@@ -23,9 +24,9 @@ function App() {
             children: <SVGComponent />,
           },
           {
-            label: "svg to other image format",
+            label: "export to other image format",
             key: "3",
-            children: "Content of Tab Pane 3",
+            children: <CanvasComponent />,
           },
         ]}
       />

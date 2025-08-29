@@ -2,30 +2,17 @@ import React, { useRef } from "react";
 import { Button, Typography } from "antd";
 const demo = new URL("@/assets/demo.html", import.meta.url).href;
 
-export const SVGComponent = (props: {}) => {
+export const CanvasComponent = (props: {}) => {
   const ref = useRef(null);
+
   const docs = [
     {
-      label: "namespaces",
+      label: "canvas",
       value:
-        "https://developer.mozilla.org/en-US/docs/Web/SVG/Guides/Namespaces_crash_course",
-      desc: "For example, both HTML and SVG have a <title> element. How does the user agent distinguish between the two? ",
-    },
-    {
-      label: "foreignObject",
-      value:
-        "https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/foreignObject",
-      desc: "The <foreignObject> SVG element includes elements from a different XML namespace. In the context of a browser, it is most likely (X)HTML.",
-    },
-    {
-      label: "createElementNS",
-      value:
-        "https://developer.mozilla.org/en-US/docs/Web/API/Document/createElementNS",
+        "https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL",
     },
   ];
-  // TODO: 1. xml and html, what is the difference? html can also have xmlns?
 
-  // code from html-to-image
   async function svgToDataURL(svg: SVGElement): Promise<string> {
     return Promise.resolve()
       .then(() => new XMLSerializer().serializeToString(svg))
@@ -33,14 +20,37 @@ export const SVGComponent = (props: {}) => {
       .then((html) => `data:image/svg+xml;charset=utf-8,${html}`);
   }
 
+  function createImage(url: string): Promise<HTMLImageElement> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        img.decode().then(() => {
+          requestAnimationFrame(() => resolve(img));
+        });
+      };
+      img.onerror = reject;
+      img.crossOrigin = "anonymous";
+      img.decoding = "async";
+      img.src = url;
+    });
+  }
+
   const download = async () => {
     if (!ref.current) return;
     const svgNode =
       ref.current.contentDocument.documentElement.querySelector("svg");
-    const dataUrl = await svgToDataURL(svgNode);
+
+    const svgDataUrl = await svgToDataURL(svgNode);
+    const img = await createImage(svgDataUrl);
+
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d")!;
+    context.drawImage(img, 0, 0, 200, 200);
+
+    const dataUrl = canvas.toDataURL(); // default image/png
 
     var link = document.createElement("a");
-    link.download = "my-image-name.svg";
+    link.download = "my-image-name.png";
     link.href = dataUrl;
     link.click();
   };
@@ -58,13 +68,9 @@ export const SVGComponent = (props: {}) => {
         </div>
       ))}
       <div>
-        Below svg content is from{" "}
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/foreignObject"
-          target="_blank"
-        >
-          here(foreignObject)
-        </a>
+        Since there are not api on svg that can convert svg to other types of
+        image. So, we need to find a way that can output image/png, image/xxx
+        dataUrl, the solution is **Canvas**.
       </div>
       <iframe src={demo} width={200} height={200} ref={ref} />
       <div>
