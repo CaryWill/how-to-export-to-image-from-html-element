@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { Tabs } from "antd";
+import { DataUrls } from "./componets/DataUrls";
+import "./App.css";
+import { SVGComponent } from "./componets/SVGComponent";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  // since chrome does not offer api to create image out of html elements directly
+  // we need to figure out how to workaround the image creation process out of html elements
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app">
+      <Tabs
+        defaultActiveKey="1"
+        items={[
+          {
+            label: "What is data URLs",
+            key: "1",
+            children: <DataUrls />,
+          },
+          {
+            label: "How to get data URLs of image type? **SVG**",
+            key: "2",
+            children: <SVGComponent />,
+          },
+          {
+            label: "svg to other image format",
+            key: "3",
+            children: "Content of Tab Pane 3",
+          },
+        ]}
+      />
+    </div>
+  );
 }
 
-export default App
+export default App;
