@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Tabs } from "antd";
+
 import { DataUrls } from "./componets/DataUrls";
 import "./App.css";
 import { SVGComponent } from "./componets/SVGComponent";
@@ -24,7 +25,7 @@ function App() {
             children: <SVGComponent />,
           },
           {
-            label: "export to other image format",
+            label: "Export to other image format",
             key: "3",
             children: <CanvasComponent />,
           },
