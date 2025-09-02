@@ -53,14 +53,10 @@ export const CanvasComponent = (props: {}) => {
     var link = document.createElement("a");
     link.download = "my-image-name.png";
     link.href = dataUrl;
-    // link.click();
+    link.click();
   };
 
-  // TODO: you maybe wondering, why dataurl downloaded can be a valid image?
-  // so, what is the content of the image/png image file.
   // base64: https://developer.mozilla.org/en-US/docs/Glossary/Base64
-
-  // 1. why base64 can repenst png?
 
   return (
     <div>
@@ -79,17 +75,6 @@ export const CanvasComponent = (props: {}) => {
         image. So, we need to find a way that can output image/png, image/xxx
         dataUrl, the solution is **Canvas**.
       </div>
-      <Button
-        onClick={() => {
-          const dataUrl = "data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==";
-          var link = document.createElement("a");
-          link.download = "my-text.txt";
-          link.href = dataUrl;
-          link.click();
-        }}
-      >
-        download text in base64
-      </Button>
       <iframe src={demo} width={200} height={200} ref={ref} />
       <div>
         <Button type="primary" onClick={download}>
