@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 import { Button, Typography } from "antd";
 const demo = new URL("@/assets/demo.html", import.meta.url).href;
+import normalSvg from "@/assets/normal.svg";
+import abnormalSvg from "@/assets/abnormal.svg";
 
 export const SVGComponent = (props: {}) => {
   const ref = useRef(null);
@@ -9,7 +11,19 @@ export const SVGComponent = (props: {}) => {
       label: "namespaces",
       value:
         "https://developer.mozilla.org/en-US/docs/Web/SVG/Guides/Namespaces_crash_course",
-      desc: "For example, both HTML and SVG have a <title> element. How does the user agent distinguish between the two? ",
+      desc: [
+        "For example, both HTML and SVG have a <title> element. How does the user agent distinguish between the two? ",
+        "When passed as datauri, img rendering will go to svg rendering engine, since it will look up the mime type",
+        "Each xml dialet has a determined namespace, not a random one",
+        <div>
+          <img
+            src={abnormalSvg}
+            alt="这个 svg 浏览器识别不了，因为它的 namespace"
+            style={{ marginRight: 20 }}
+          />
+          <img src={normalSvg} />
+        </div>,
+      ],
     },
     {
       label: "foreignObject",
@@ -67,6 +81,7 @@ export const SVGComponent = (props: {}) => {
         </a>
       </div>
       <iframe src={demo} width={200} height={200} ref={ref} />
+
       <div>
         <Button type="primary" onClick={download}>
           download iframe svg file

@@ -11,6 +11,7 @@ function App() {
   // we need to figure out how to workaround the image creation process out of html elements
   return (
     <div className="app">
+      1. skip-fonts 是我看这个的问题来源
       <Tabs
         defaultActiveKey="1"
         items={[
